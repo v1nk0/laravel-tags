@@ -63,7 +63,8 @@ class Tag extends Model implements Sortable
         $locale = $locale ?? app()->getLocale();
 
         return static::query()
-            ->where("name->{$locale}", $name)
+            //->where("name->{$locale}", $name)
+            ->where(\DB::raw('JSON_EXTRACT(`name`, "$.{$locale}")'), '=', $name)
             ->where('type', $type)
             ->first();
     }
@@ -73,7 +74,8 @@ class Tag extends Model implements Sortable
         $locale = $locale ?? app()->getLocale();
 
         return static::query()
-            ->where("name->{$locale}", $name)
+            //->where("name->{$locale}", $name)
+            ->where(\DB::raw('JSON_EXTRACT(`name`, "$.{$locale}")'), '=', $name)
             ->first();
     }
 
